@@ -6,4 +6,5 @@ app_name = 'main'  # here for namespacing of urls.
 
 urlpatterns = [
     path("", views.homepage, name="homepage"),
+    path("movies/<int:movie_id>", views.movie, name="movie"),
 ]
