@@ -46,7 +46,8 @@ class Movie(models.Model):
     writers = models.ManyToManyField(Writer)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.production_year})"
+        
 
 class Discussion(models.Model):
     title = models.CharField(max_length=50)
