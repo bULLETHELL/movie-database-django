@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class Director(models.Model):
     name = models.CharField(max_length=100)
     biography = models.TextField(max_length=1000)
-    date_of_birth = models.DateField
+    date_of_birth = models.DateField()
 
     def __str__(self):
         return self.name
@@ -13,7 +13,7 @@ class Director(models.Model):
 class Actor(models.Model):
     name = models.CharField(max_length=100)
     biography = models.TextField(max_length=1000)
-    date_of_birth = models.DateField
+    date_of_birth = models.DateField()
 
     def __str__(self):
         return self.name
@@ -21,7 +21,7 @@ class Actor(models.Model):
 class Writer(models.Model):
     name = models.CharField(max_length=100)
     biography = models.TextField(max_length=1000)
-    date_of_birth = models.DateField
+    date_of_birth = models.DateField()
 
     def __str__(self):
         return self.name
@@ -34,9 +34,9 @@ class Genre(models.Model):
     
 class Movie(models.Model):
     name = models.CharField(max_length=100)
-    production_year = models.IntegerField(max_length=4)
-    length = models.TimeField
-    release_date = models.DateField
+    production_year = models.IntegerField()
+    length = models.TimeField()
+    release_date = models.DateField()
     description = models.TextField(max_length=500)
     rating = models.DecimalField(max_digits=3, decimal_places=1)
     trailer = models.CharField(max_length=150)
@@ -47,7 +47,7 @@ class Movie(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.production_year})"
-        
+
 
 class Discussion(models.Model):
     title = models.CharField(max_length=50)
