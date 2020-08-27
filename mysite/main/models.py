@@ -35,11 +35,12 @@ class Genre(models.Model):
 class Movie(models.Model):
     name = models.CharField(max_length=100)
     production_year = models.IntegerField()
-    length = models.TimeField()
+    length = models.CharField(max_length=10)
     release_date = models.DateField()
     description = models.TextField(max_length=500)
     rating = models.DecimalField(max_digits=3, decimal_places=1)
     trailer = models.CharField(max_length=150)
+    poster = models.CharField(max_length=150)
     genres = models.ManyToManyField(Genre)
     directors = models.ManyToManyField(Director)
     actors = models.ManyToManyField(Actor)

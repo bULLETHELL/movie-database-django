@@ -1,1 +1,81 @@
-<h1>{{movie}}</h1>
+{% extends 'header.html' %}
+
+<body>
+    {% block content %}
+    <div class="container">
+        <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+                <div class="row">
+                    <div class="col s2">
+                        <span class="card-title">{{movie}}</span>
+                    </div>
+                    <div class="col s8"></div>
+                    <div class="col s2">
+                        <h6 class="valign-wrapper">{{movie.rating}}/10 <i class="material-icons yellow-text">stars</i></h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s6">{{movie.length}} | 
+                    {% for genre in movie.genres.all  %}
+                        {% if not forloop.last %}
+                            {{genre.name}}, 
+                        {% else %}
+                            {{genre.name}}
+                        {% endif %}
+                    {% endfor %} | {{movie.release_date}}</div>
+                </div>
+                <div class="card-image">
+                    <div class="video-container">
+                        <iframe width="200" height="200" src="{{movie.trailer}}" frameborder="0"
+                            allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <p>{{movie.description}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <p>Director: 
+                        {% for director in movie.directors.all %}
+                            {% if not forloop.last %}
+                                {{director.name}}, 
+                            {% else %}
+                                {{director.name}}  
+                            {% endif %}
+                        {% endfor %}
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <p>Writers:
+                        {% for writer in movie.writers.all %}
+                            {% if not forloop.last %}
+                                {{writer.name}}, 
+                            {% else %}
+                                {{writer.name}}  
+                            {% endif %}
+                        {% endfor %}
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <p>Stars: 
+                        {% for actor in movie.actors.all %}
+                            {% if not forloop.last %}
+                                {{actor.name}}, 
+                            {% else %}
+                                {{actor.name}}  
+                            {% endif %}
+                        {% endfor %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</body>
