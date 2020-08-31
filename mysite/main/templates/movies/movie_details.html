@@ -11,18 +11,19 @@
                     </div>
                     <div class="col s8"></div>
                     <div class="col s2">
-                        <h6 class="valign-wrapper">{{movie.rating}}/10 <i class="material-icons yellow-text">stars</i></h6>
+                        <h6 class="valign-wrapper">{{movie.rating}}/10 <i class="material-icons yellow-text">stars</i>
+                        </h6>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col s6">{{movie.length}} | 
-                    {% for genre in movie.genres.all  %}
+                    <div class="col s6">{{movie.length}} |
+                        {% for genre in movie.genres.all  %}
                         {% if not forloop.last %}
-                            {{genre.name}}, 
+                        {{genre.name}},
                         {% else %}
-                            {{genre.name}}
+                        {{genre.name}}
                         {% endif %}
-                    {% endfor %} | {{movie.release_date}}</div>
+                        {% endfor %} | {{movie.release_date}}</div>
                 </div>
                 <div class="card-image">
                     <div class="video-container">
@@ -37,45 +38,102 @@
                 </div>
                 <div class="row">
                     <div class="col s12">
-                        <p>Director: 
-                        {% for director in movie.directors.all %}
+                        <p>Director:
+                            {% for director in movie.directors.all %}
                             {% if not forloop.last %}
-                                {{director.name}}, 
+                            {{director.name}},
                             {% else %}
-                                {{director.name}}  
+                            {{director.name}}
                             {% endif %}
-                        {% endfor %}
+                            {% endfor %}
                         </p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col s12">
                         <p>Writers:
-                        {% for writer in movie.writers.all %}
+                            {% for writer in movie.writers.all %}
                             {% if not forloop.last %}
-                                {{writer.name}}, 
+                            {{writer.name}},
                             {% else %}
-                                {{writer.name}}  
+                            {{writer.name}}
                             {% endif %}
-                        {% endfor %}
+                            {% endfor %}
                         </p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col s12">
-                        <p>Stars: 
-                        {% for actor in movie.actors.all %}
+                        <p>Stars:
+                            {% for actor in movie.actors.all %}
                             {% if not forloop.last %}
-                                {{actor.name}}, 
+                            {{actor.name}},
                             {% else %}
-                                {{actor.name}}  
+                            {{actor.name}}
                             {% endif %}
-                        {% endfor %}
+                            {% endfor %}
                         </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="container">
+        <h4>Discussion</h4>
+        <!-- Modal Trigger -->
+        <a class="waves-effect waves-light btn red modal-trigger" href="#newdiscussion">New Discussion</a>
+        <!-- Modal Structure -->
+        <div id="newdiscussion" class="modal">
+            <div class="modal-content">
+                <h4>New Discussion on {{movie}}</h4>
+                <form method="POST" action="/new_discussion/">
+                    {% csrf_token %}
+                    <label>Title</label><br>
+                    <input type="text" name="title">
+                    <label>Text</label><br>
+                    <input type="text" name="text">
+                    <input type="hidden" name="author" value="{{user}}">
+                    <input type="hidden" name="parent_movie" value="{{movie.id}}">
+                    <button class="btn waves-effect waves-light" type="submit">Create Discussion</button>
+                </form>
+            </div>
+        </div>
+        {% for discussion in discussions %}
+        <div class="row">
+            <div class="col s12">
+                <div class="card">
+                    <div class="card-content">
+                        <!-- Modal Trigger -->
+                        <a class="btn-floating halfway-fab waves-effect waves-light modal-trigger red" href="#reply"><i
+                                class="material-icons">reply</i></a>
+                        <span class="card-title">{{discussion.title}}</span>
+                        <i>By {{discussion.author}}</i>
+                        <p>{{discussion.text}}</p>
+                        <!-- Modal Structure -->
+                        <div id="reply" class="modal">
+                            <div class="modal-content">
+                                <h4>Reply to {{discussion}}</h4>
+                                <form method="POST" action="/reply_request/">
+                                    {% csrf_token %}
+                                    <label>Text</label><br>
+                                    <input type="text" name="text">
+                                    <input type="hidden" name="author" value="{{user}}">
+                                    <input type="hidden" name="parent_discussion" value="{{discussion.id}}">
+                                    <button class="btn waves-effect waves-light" type="submit">Create
+                                        Reply</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('.modal').modal();
+        });
+    </script>
     {% endblock %}
 </body>
