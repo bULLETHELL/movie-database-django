@@ -7,7 +7,9 @@ from .forms import LoginForm, DiscussionForm, CommentForm
 
 # Create your views here.
 def homepage(request):
-    return HttpResponse("pythonprogramming.net homepage! Wow so #amaze.")
+    return render(request = request,
+                  template_name="homepage.html",
+                  context={'loginForm': LoginForm})
 
 def movie(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
