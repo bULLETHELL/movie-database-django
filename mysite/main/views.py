@@ -12,9 +12,10 @@ def homepage(request):
 def movie(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
     discussions = Discussion.objects.filter(parent_movie=movie)
+    comments = Comment.objects.all()
     return render(request = request,
                   template_name="movies/movie_details.html",
-                  context = {'loginForm': LoginForm, 'discussionForm': DiscussionForm, "movie": movie, "discussions": discussions, "user": request.user,})
+                  context = {'loginForm': LoginForm, 'discussionForm': DiscussionForm, "movie": movie, "discussions": discussions, "comments": comments, "user": request.user,})
 
 def new_discussion(request):
     if request.method == 'POST':
